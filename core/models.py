@@ -73,8 +73,8 @@ class Grade(models.Model):
     updated_at = models.DateTimeField(auto_now_add=True)
     objects = models.Manager()
 
-    class Meta:
-        db_table = 'Grades'
+    #class Meta:
+    #   db_table = 'Grades'
 
     def __str__(self):
         return self.class_name
