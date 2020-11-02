@@ -63,9 +63,9 @@ AUTHENTICATION_BACKENDS = ['core.EmailBackEnd.EmailBackEnd']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'USER': 'postgres',
-        'NAME': 'sdigsms_db',
-        'PASSWORD': 'sagacious1',
+        'USER': 'obaeauomdwpjvg',
+        'NAME': 'd5tntrceljtigb',
+        'PASSWORD': '6807c24b061d5a52e355f0bb9c462af68c96f45653e9a419d74c173a02262aeb',
         'HOST': 'localhost',
         'PORT': '5432'
     }
