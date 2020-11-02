@@ -1,0 +1,5 @@
+    path('view_attendance', headViews.manage_classes, name="view_attendance"),
+    path('student_feedback', headViews.manage_classes, name="student_feedback"),
+    path('teacher_feedback', headViews.manage_classes, name="teacher_feedback"),
+    path('student_leave', headViews.manage_classes, name="student_leaves"),
+    path('teacher_leave', headViews.manage_classes, name="teacher_leave")

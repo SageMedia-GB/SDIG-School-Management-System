@@ -1,0 +1,158 @@
+{% load static %}
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="{% url 'headteacher_home' %}" class="brand-link">
+      <img src="{% static "dist/img/AdminLTELogo.png" %}" alt="SMS Logo" class="brand-image img-circle elevation-3"
+           style="opacity: .8">
+      <span class="brand-text font-weight-light">Adakope M/A</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="{% static "dist/img/avatar3.png" %}" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="#" class="d-block">{{ user.username }}</a>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item">
+            {% url 'add_teacher' as add_teacher %}
+            <a href="{{ add_teacher }}" class="nav-link {% if request.path == add_teacher %} active {% endif %}">
+              <i class="nav-icon fas fa-plus-square"></i>
+              <p>
+                Add teacher
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'manage_teachers' as manage_teachers %}
+            {% url 'edit_teacher' teacher_id=id as edit_teacher %}
+            <a href="{{ manage_teachers }}" class="nav-link {% if request.path == manage_teachers %} active {% endif %}{% if request.path == edit_teacher %} active {% endif %}">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>
+                Manage teachers
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'add_student' as add_student %}
+            <a href="{{ add_student }}" class="nav-link {% if request.path == add_student %} active {% endif %}">
+              <i class="nav-icon fas fa-plus-square"></i>
+              <p>
+                Add student
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'manage_students' as manage_students %}
+            {% url 'edit_student' student_id=id as edit_student %}
+            <a href="{{ manage_students }}" class="nav-link {% if request.path == manage_students %} active {% endif %}{% if request.path == edit_student %} active {% endif %}">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>
+                Manage students
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'add_class' as add_class %}
+            <a href="{{ add_class }}" class="nav-link {% if request.path == add_class %} active {% endif %}">
+              <i class="nav-icon fas fa-plus-square"></i>
+              <p>
+                Add class
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'manage_classes' as manage_classes %}
+            {% url 'edit_class' class_id=id as edit_class %}
+            <a href="{{ manage_classes }}" class="nav-link {% if request.path == manage_classes %} active {% endif %}{% if request.path == edit_class %} active {% endif %}">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>
+                Manage classes
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'add_subject' as add_subject %}
+            <a href="{{ add_subject }}" class="nav-link {% if request.path == add_subject %} active {% endif %}">
+              <i class="nav-icon fas fa-plus-square"></i>
+              <p>
+                Add subject
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'manage_subjects' as manage_subjects %}
+            {% url 'edit_subject' subject_id=id as edit_subject %}
+            <a href="{{ manage_subjects }}" class="nav-link {% if request.path == manage_subjects %} active {% endif %}{% if request.path == edit_subject %} active {% endif %}">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>
+                Manage subjects
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'manage_terms' as manage_terms %}
+            <a href="{{ manage_terms }}" class="nav-link {% if request.path == manage_terms %} active {% endif %}">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>
+                Manage Terms
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-book"></i>
+              <p>
+                view attendance
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-envelope"></i>
+              <p>
+                Student feedback
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-envelope"></i>
+              <p>
+                Teacher feedback
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-calendar-alt"></i>
+              <p>
+                Student leave
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-calendar-alt"></i>
+              <p>
+                Teacher leave
+              </p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
