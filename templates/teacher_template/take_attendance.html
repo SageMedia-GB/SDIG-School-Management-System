@@ -104,13 +104,15 @@
                 var attendance_date=$("#attendance_date").val();
                 var subject_id=$("#subject").val();
                 var term_id=$("#term").val();
+                JSON.stringify(student_data);
 
 
                 $.ajax({
-                    url:'{% url 'save_attendance_data' %}',
+                    url:"{% url 'save_attendance_data' %}",
                     type:'POST',
                     data:{student_ids:student_data,attendance_date:attendance_date,subject_id:subject_id,term_id:term_id},
-                    content_type:'application/json',
+                    contentType:'application/json',
+                    dataType:'json'
                 })
                 .done(function(response){
                     console.log(response)

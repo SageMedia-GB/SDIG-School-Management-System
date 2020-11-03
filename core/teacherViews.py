@@ -3,7 +3,7 @@ from django.core import serializers
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from core.models import Subject, TermModel, Student, Attendance
+from core.models import Subject, TermModel, Student, Attendance, AttendanceReport
 
 
 def teacher_home(request):
@@ -37,12 +37,15 @@ def save_attendance_data(request):
     attendance_date = request.POST.get("attendance_date")
     term_id = request.POST.get("term_id")
 
-subject_model = Subject.objects.get(id=subject_id)
-term_model = TermModel.object.get(id=term_id)
-attendance = Attendance(subject_id=subject_model, attendance_date=attendance_date, term_id=term_model)
-attendance.save()
+    #subject_model = Subject.objects.get(id=subject_id)
+    term_model = TermModel.object.get(id=term_id)
+    attendance = Attendance(attendance_date=attendance_date, term_id=term_model)
+    attendance.save()
+    print("True")
 
-for stud in student_ids:
-    student = Student.objects.get(id=stud)
-        attendance_report + AttendanceReport()
-    return HttpResponse("ok")
+    for stud in student_ids:
+        student = Student.objects.get(id=stud)
+        attendance_report = AttendanceReport(student, attendance)
+        print(attendance_report)
+        attendance_report.save()
+        return HttpResponse("ok")
