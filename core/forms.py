@@ -18,16 +18,19 @@ class AddStudentForm(forms.Form):
     gender = forms.ChoiceField(label="Gender", choices=gender_choice, widget=forms.Select(attrs={"class": "form-control"}))
     grade_list = []
     grades = Grade.objects.all()
+
     for grade in grades:
         small_grade = (grade.id, grade.class_name)
         grade_list.append(small_grade)
-        #grade_list = []
+
 
     term_list = []
     terms = TermModel.object.all()
+
     for term in terms:
-        small_term = (term.id, str(term.term_start)+"  -  "+str(term.term_end))
+        small_term = (term.id, str(term.term_start) + "  -  " + str(term.term_end))
         term_list.append(small_term)
+
 
     grade = forms.ChoiceField(label="Grade", choices=grade_list, widget=forms.Select(attrs={"class": "form-control"}))
     username = forms.CharField(label="Username", max_length=50, widget=forms.TextInput(attrs={"class": "form-control"}))
@@ -49,6 +52,7 @@ class EditStudentForm(forms.Form):
     )
     gender = forms.ChoiceField(label="Gender", choices=gender_choice, widget=forms.Select(attrs={"class": "form-control"}))
     grade_list = []
+
     try:
         grades = Grade.objects.all()
         for grade in grades:
@@ -58,6 +62,7 @@ class EditStudentForm(forms.Form):
         grade_list = []
 
     term_list = []
+
     try:
         terms = TermModel.object.all()
         for term in terms:
