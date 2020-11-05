@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "python.pythonPath": "C:\\Users\\Usern\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+=======
+  "python.pythonPath": "test-env\\Scripts\\python.exe",
+>>>>>>> 81b9da6151038648cf5599fb19f17a53ecd1a0d6
   "editor.formatOnSave": true,
   "python.linting.pycodestyleEnabled": true,
   "python.linting.pylintEnabled": true,
