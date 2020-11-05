@@ -62,12 +62,12 @@ AUTHENTICATION_BACKENDS = ['core.EmailBackEnd.EmailBackEnd']
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'USER': 'obaeauomdwpjvg',
-        'NAME': 'd5tntrceljtigb',
-        'PASSWORD': '6807c24b061d5a52e355f0bb9c462af68c96f45653e9a419d74c173a02262aeb',
-        'HOST': 'ec2-18-210-180-94.compute-1.amazonaws.com',
-        'PORT': '5432'
+        'ENGINE': 'django.db.backends.mysql',
+        'USER': 'root',
+        'NAME': 'sdig_sms',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306'
     }
 }
 
