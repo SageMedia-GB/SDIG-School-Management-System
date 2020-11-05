@@ -110,7 +110,8 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            {% url 'attendance_table' as attendance_table %}
+            <a href="{{ attendance_table }}" class="nav-link {% if request.path == attendance_table %} active {% endif %}">
               <i class="nav-icon fas fa-book"></i>
               <p>
                 view attendance

@@ -46,12 +46,14 @@ def save_attendance_data(request):
     json_student_data = json.loads(student_ids)
 
     try:
-        attendance = Attendance(subject_id=subject_model, attendance_date=attendance_date, term_id=term_model)
+        attendance = Attendance(
+            subject_id=subject_model, attendance_date=attendance_date, term_id=term_model)
         attendance.save()
 
         for stud in json_student_data:
             student = Student.objects.get(admin=stud['id'])
-            attendance_report = AttendanceReport(student_id=student, attendance_id=attendance, status=stud['status'])
+            attendance_report = AttendanceReport(
+                student_id=student, attendance_id=attendance, status=stud['status'])
             attendance_report.save()
         return HttpResponse("OK")
     except:
@@ -62,7 +64,7 @@ def update_attendance_data(request):
     subjects = Subject.objects.filter(teacher_id=request.user.id)
     term_id = TermModel.object.all()
     attendance = Attendance.objects.all()
-    return render(request,"teacher_template/update_attendance.html", {"subjects":subjects, "term_id":term_id})
+    return render(request, "teacher_template/update_attendance.html", {"subjects": subjects, "term_id": term_id})
 
 
 @csrf_exempt
@@ -71,10 +73,16 @@ def get_attendance_dates(request):
     term_id = request.POST.get("term_id")
     term_obj = TermModel.object.get(id=term_id)
     subject_obj = Subject.objects.get(id=subject)
-    attendance = Attendance.objects.filter(subject_id=subject_obj, term_id=term_obj)
+    attendance = Attendance.objects.filter(
+        subject_id=subject_obj, term_id=term_obj)
     attendance_obj = []
     for small_attendance in attendance:
-        data = {"id":small_attendance.id, "attendance_date":small_attendance.attendance_date, "term_id":small_attendance.term_id}
+        data = {"id": small_attendance.id, "attendance_date": small_attendance.attendance_date,
+                "term_id": small_attendance.term_id}
         attendance_obj.append(data)
 
     return JsonResponse(json.dumps(attendance_obj), safe=False)
+
+
+def attendance_table(request):
+    return render(request, "teacher_template/attendance_table.html")

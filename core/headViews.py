@@ -339,3 +339,6 @@ def add_term_save(request):
             messages.error(request, "Failed to add term")
             return HttpResponseRedirect(reverse("manage_terms"))
 
+
+def attendance_table(request):
+    return render(request, "headteacher_template/attendance_table.html")
