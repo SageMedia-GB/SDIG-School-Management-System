@@ -1,0 +1,223 @@
+{% extends 'teacher_template/base_template.html' %}
+{% block page_title %}
+Take attendance
+{% endblock page_title %}
+{% block main_content %}
+<!-- Main content -->
+<section class="content">
+	<div class="container-fluid">
+		<div class="row">
+			<!-- left column -->
+			<div class="col-md-12">
+				<!-- general form elements -->
+				<div class="card card-primary">
+					<div class="card-header">
+						<h3 class="card-title">Take Attendance</h3>
+					</div>
+					<!-- /.card-header -->
+					<!-- form start -->
+					<div class="row">
+						<div class="col-sm-12">
+							<table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid"
+								aria-describedby="example2_info">
+								<thead>
+									<tr role="row">
+										<th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+											aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Rendering
+											engine</th>
+										<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+											aria-label="Browser: activate to sort column ascending">Browser</th>
+										<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+											aria-label="Platform(s): activate to sort column ascending">Platform(s)</th>
+										<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+											aria-label="Engine version: activate to sort column ascending">Engine version</th>
+										<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+											aria-label="CSS grade: activate to sort column ascending">CSS grade</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr role="row" class="odd">
+										<td tabindex="0" class="sorting_1">Gecko</td>
+										<td>Firefox 1.0</td>
+										<td>Win 98+ / OSX.2+</td>
+										<td>1.7</td>
+										<td>A</td>
+									</tr>
+									<tr role="row" class="even">
+										<td tabindex="0" class="sorting_1">Gecko</td>
+										<td>Firefox 1.5</td>
+										<td>Win 98+ / OSX.2+</td>
+										<td>1.8</td>
+										<td>A</td>
+									</tr>
+									<tr role="row" class="odd">
+										<td tabindex="0" class="sorting_1">Gecko</td>
+										<td>Firefox 2.0</td>
+										<td>Win 98+ / OSX.2+</td>
+										<td>1.8</td>
+										<td>A</td>
+									</tr>
+									<tr role="row" class="even">
+										<td tabindex="0" class="sorting_1">Gecko</td>
+										<td>Firefox 3.0</td>
+										<td>Win 2k+ / OSX.3+</td>
+										<td>1.9</td>
+										<td>A</td>
+									</tr>
+									<tr role="row" class="odd">
+										<td class="sorting_1" tabindex="0">Gecko</td>
+										<td>Camino 1.0</td>
+										<td>OSX.2+</td>
+										<td>1.8</td>
+										<td>A</td>
+									</tr>
+									<tr role="row" class="even">
+										<td class="sorting_1" tabindex="0">Gecko</td>
+										<td>Camino 1.5</td>
+										<td>OSX.3+</td>
+										<td>1.8</td>
+										<td>A</td>
+									</tr>
+									<tr role="row" class="odd">
+										<td class="sorting_1" tabindex="0">Gecko</td>
+										<td>Netscape 7.2</td>
+										<td>Win 95+ / Mac OS 8.6-9.2</td>
+										<td>1.7</td>
+										<td>A</td>
+									</tr>
+									<tr role="row" class="even">
+										<td class="sorting_1" tabindex="0">Gecko</td>
+										<td>Netscape Browser 8</td>
+										<td>Win 98SE+</td>
+										<td>1.7</td>
+										<td>A</td>
+									</tr>
+									<tr role="row" class="odd">
+										<td class="sorting_1" tabindex="0">Gecko</td>
+										<td>Netscape Navigator 9</td>
+										<td>Win 98+ / OSX.2+</td>
+										<td>1.8</td>
+										<td>A</td>
+									</tr>
+									<tr role="row" class="even">
+										<td class="sorting_1" tabindex="0">Gecko</td>
+										<td>Mozilla 1.0</td>
+										<td>Win 95+ / OSX.1+</td>
+										<td>1</td>
+										<td>A</td>
+									</tr>
+								</tbody>
+								<tfoot>
+									<tr>
+										<th rowspan="1" colspan="1">Rendering engine</th>
+										<th rowspan="1" colspan="1">Browser</th>
+										<th rowspan="1" colspan="1">Platform(s)</th>
+										<th rowspan="1" colspan="1">Engine version</th>
+										<th rowspan="1" colspan="1">CSS grade</th>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+					<!-- /.card-body -->
+					<div class="card-footer">
+						<button type="button" class="btn btn-primary btn-block" id="fetch_attendance">Fetch</button>
+					</div>
+				</div>
+				<!-- /.card -->
+			</div>
+			<!--/.col (right) -->
+		</div>
+		<div id="student_data" class="card-footer">
+
+		</div>
+	</div>
+</section>
+<!-- /.content -->
+{% endblock main_content %}
+{% block custom_js %}
+<script>
+	$(document).ready(function () {
+		$("#fetch_attendance").click(function () {
+			var subject = $("#subject").val()
+			var term = $("#term").val()
+
+			$.ajax({
+					url: '{% url "get_students_attendance" %}',
+					type: 'POST',
+					data: {
+						subject: subject,
+						term: term
+					},
+				})
+				.done(function (response) {
+					var json_data = JSON.parse(response);
+					console.log(json_data)
+					var div_data =
+						"<div class='form-group'><label>Attendance Date</label><input type='date' name='attendance_date' id='attendance_date' class='form-control'></div><div class='form-group'><div class='row'>";
+					for (key in json_data) {
+						div_data +=
+							"<div class='col-lg-2'><div class='form-check'><input type='checkbox' checked='checked' name='student_data[]' value='" +
+							json_data[key]['id'] + "'><label class='form-check-label'>" + json_data[key]['name'] +
+							"</label></div></div>";
+					}
+					div_data += "</div></div>";
+					div_data += "<div class='form-group'>";
+					div_data +=
+						"<button id='save_attendance' class='btn btn-success btn-block' type='button'>Save Attendance</button>";
+
+					$("#student_data").html(div_data);
+				})
+				.fail(function (response) {
+					alert("Error. Cannot fetch data")
+				})
+
+			$(document).on("click", "#save_attendance", function () {
+				$(this).attr("disabled", "disabled")
+				$(this).text("Saving Attendance...")
+				var student_data = $("input[name='student_data[]']").map(function () {
+					if ($(this).is(":checked")) {
+						return {
+							"id": $(this).val(),
+							"status": 1
+						};
+					} else {
+						return {
+							"id": $(this).val(),
+							"status": 0
+						};
+					}
+				}).get()
+				var attendance_date = $("#attendance_date").val();
+				var subject_id = $("#subject").val();
+				var term_id = $("#term").val();
+				console.log(student_data)
+				student_data = JSON.stringify(student_data)
+
+				$.ajax({
+						url: '{% url "save_attendance_data" %}',
+						type: 'POST',
+						data: {
+							student_ids: student_data,
+							attendance_date: attendance_date,
+							subject_id: subject_id,
+							term_id: term_id
+						},
+					})
+					.done(function (response) {
+						if (response == "OK") {
+							alert("Attendance Data Saved")
+						} else {
+							alert("Couldn't Save Attendance Data")
+						}
+						location.reload()
+					})
+					.fail(function (response) {
+						alert("Error, Cannot save data")
+					})
+			})
+		})
+	})
+
+</script>
+{% endblock custom_js %}
