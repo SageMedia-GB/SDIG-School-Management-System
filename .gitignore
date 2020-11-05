@@ -10,7 +10,6 @@ __pycache__/
 .Python
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
@@ -100,6 +99,7 @@ celerybeat-schedule
 # Environments
 .env
 .venv
+test-env/
 env/
 venv/
 ENV/
