@@ -17,6 +17,7 @@ class AddStudentForm(forms.Form):
     )
     gender = forms.ChoiceField(label="Gender", choices=gender_choice, widget=forms.Select(attrs={"class": "form-control"}))
     grade_list = []
+
     grades = Grade.objects.all()
 
     for grade in grades:
