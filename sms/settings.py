@@ -1,5 +1,5 @@
 import os
-
+import django_heroku
 ENVIRONMENT = os.getenv('ENVIRONMENT', 'development')
 
 DEBUG = True
@@ -62,12 +62,12 @@ AUTHENTICATION_BACKENDS = ['core.EmailBackEnd.EmailBackEnd']
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'USER': 'postgres',
-        'NAME': 'sdigsms_db',
-        'PASSWORD': 'sagacious1',
+        'ENGINE': 'django.db.backends.mysql',
+        'USER': 'root',
+        'NAME': 'sdig_sms',
+        'PASSWORD': '',
         'HOST': 'localhost',
-        'PORT': '5432'
+        'PORT': '3306'
     }
 }
 
@@ -82,3 +82,5 @@ if ENVIRONMENT == 'production':
     SECURE_REDIRECT_EXEMPT = []
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+django_heroku.settings(locals())
