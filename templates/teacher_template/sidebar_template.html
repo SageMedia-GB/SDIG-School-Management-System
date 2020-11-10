@@ -56,16 +56,16 @@
             <a href="{{ attendance_table }}" class="nav-link {% if request.path == attendance_table %} active {% endif %}">
               <i class="nav-icon fas fa-plus-square"></i>
               <p>
-                View / Update Attendance
+                second attendance_table
               </p>
             </a>
           </li>
           <li class="nav-item">
-            {% url 'att_table' as att_table %}
-            <a href="{{ att_table }}" class="nav-link {% if request.path == att_table %} active {% endif %}">
+            {% url 'new_attendance' as new_attendance %}
+            <a href="{{ new_attendance }}" class="nav-link {% if request.path == new_attendance %} active {% endif %}">
               <i class="nav-icon fas fa-plus-square"></i>
               <p>
-                Attendance Table
+                New Attendance Table
               </p>
             </a>
           </li>

@@ -50,12 +50,13 @@ urlpatterns = [
     path('update_attendance_data', teacherViews.update_attendance_data,
          name="update_attendance_data"),
     path('attendance_table', teacherViews.attendance_table, name="attendance_table"),
-    path('att_table', teacherViews.att_table, name="att_table"),
 
 
     # Urls for new attendance module
-    path('get_new_attendance', teacherViews.get_new_attendance, name="get_new_attendance"),
+    path('new_attendance', teacherViews.new_attendance, name="new_attendance"),
+    #path('get_new_attendance', teacherViews.get_new_attendance, name="get_new_attendance"),
     path('save_new_attendance_data', teacherViews.save_new_attendance_data, name="save_new_attendance_data"),
+    path('get_att_table', teacherViews.get_att_table, name="get_att_table"),
 
 
     # Urls for students

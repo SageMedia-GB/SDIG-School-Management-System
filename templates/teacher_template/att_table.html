@@ -14,13 +14,20 @@
               </div>
           <div class="card-body">
             <div class="form-group">
+              <label>Class</label>
+              <select class="form-control" name="grade" id="grade">
+                  {% for class in classes %}
+                      <option value="{{ class.id }}">{{ class.class_name }}</option>
+                  {% endfor %}
+              </select>
+            </div>
+            <div class="form-group">
               <label>Term</label>
               <select class="form-control" name="term" id="term">
                   {% for term in terms %}
                       <option value="{{ term.id }}">{{ term.term_start }} To {{ term.term_end }}</option>
                   {% endfor %}
               </select>
-              <input id="grade" type="hidden" class="form-control" name="grade" value="{{ grade.id }}">
             </div>
                 <div class="form-group">
                   {% if messages %}
@@ -34,88 +41,94 @@
                       {% endfor %}
                   {% endif %}
               </div>
+              <div class="form-group">
+                <button type="button" class="btn btn-primary btn-block" id="fetch_new_attendance">Fetch</button>
+              </div>
               <div class='form-group'>
                 <label>Attendance Date</label>
                 <input type='date' name='attendance_date' id='attendance_date' class='form-control'>
               </div>
-                <table class="table table-bordered">
+                <table id="table_head" class="table table-bordered">
                   <thead>
                     <tr>
                       <th style="width: 5px">#</th>
-                      <th style="width: 40px">Reg. Number</th>
+                      <th style="width: 40px">Admission Number</th>
                       <th style="width: 70px">Name</th>
                       <th style="width: 40px">DOB</th>
                       <th style="width: 10px">Status</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    {% for student in students %}
-                    <tr>
-                      <td>{{ forloop.counter }}</td>
-                      <td>{{ student.reg_number }}</td>
-                      <td>{{ student.admin.last_name }} {{ student.admin.first_name }}</td>
-                      <td>{{ student.date_of_birth }}</td>
-                      <td>
-                      <div class='form-check'>
-                        <input type="checkbox" checked="checked" name="student_data[]" value="{{ student.id }}">
-                      </div>
-                      </td>
-                    </tr>
-                    {% endfor %}
+                  <tbody id="student_data">
                   </tbody>
                 </table>
               </div>
-              <div class='form-group'>
-                <button id="save_attendance" class="btn btn-success btn-block" type="button">Save Attendance</button>
+              <div class='card-footer'>
+                <button id="save_new_attendance" class="btn btn-success btn-block" type="button">Save Attendance</button>
               </div>
             </div>
         </div>
     </div>
     </section>
     <!-- /.content -->
-{% endblock main_content %}
-{% block custom_js %}
-<script>
+  {% endblock main_content %}
+  {% block custom_js %}
+  <script>
   $(document).ready(function(){
-    $(document).on("click","#save_attendance",function(){
-        $(this).attr("disabled","disabled")
-        $(this).text("Saving Attendance...")
-        var student_data=$("input[name='student_data[]']").map(function(){
-              if($(this).is(":checked")){
-                return {"id":$(this).val(),"status":1};
+      $("#fetch_new_attendance").click(function(){
+          var grade = $("#grade").val()
+          var term = $("#term").val()
+          $.ajax({
+              url:'{% url "get_att_table" %}',
+              type:'POST',
+              data:{grade:grade,term:term},
+          })
+          .done(function(response){
+              var json_data=JSON.parse(response);
+              var form_data='';
+              for(key in json_data){
+                form_data+='<tr><td>' + 1 + '</td><td>' + json_data[key]['admission'] + '</td><td>' + json_data[key]['name'] + '</td><td>' + json_data[key]['DOB'] + '</td><td><div class="form-check"><input type="checkbox" checked="checked" name="student_data[]" value="'+json_data[key]['id']+'"></td></tr>';
+              }
+              $("#student_data").html(form_data);
+          })
+          .fail(function(response){
+              alert("Error. Cannot fetch data")
+          })
+          $(document).on("click","#save_new_attendance",function(){
+            $(this).attr("disabled","disabled")
+            $(this).text("Saving Attendance...")
+            var student_data=$("input[name='student_data[]']").map(function(){
+                  if($(this).is(":checked")){
+                    return {"id":$(this).val(),"status":1};
+                  }
+                  else{
+                    return {"id":$(this).val(),"status":0};
+                  }
+            }).get()
+            var attendance_date=$("#attendance_date").val();
+            var class_id=$("#grade").val();
+            var term_id=$("#term").val();
+            console.log(student_data)
+            student_data=JSON.stringify(student_data)
+
+            $.ajax({
+                url:'{% url "save_new_attendance_data" %}',
+                type:'POST',
+                data:{student_ids:student_data,attendance_date:attendance_date,class_id:class_id,term_id:term_id},
+            })
+            .done(function(response){
+              if(response=="OK"){
+                alert("Attendance Data Saved")
               }
               else{
-                return {"id":$(this).val(),"status":0};
+                alert("Couldn't Save Attendance Data")
               }
-        }).get()
-        var attendance_date=$("#attendance_date").val();
-        var class_id=$("#grade").val();
-        var term_id=$("#term").val();
-        console.log(student_data)
-        student_data=JSON.stringify(student_data)
-        console.log(student_data)
-
-        $.ajax({
-            url:'{% url "save_new_attendance_data" %}',
-            type:'POST',
-            data:{student_ids:student_data,attendance_date:attendance_date,class_id:class_id,term_id:term_id},
-            success:function(result){
-              console.log(result)
-            }
-        })
-        .done(function(response){
-          if(response=="OK"){
-            alert("Attendance Data Saved")
-          }
-          else{
-            alert("Couldn't Save Attendance Data")
-          }
-          //location.reload()
-        })
-        .fail(function(response){
-            alert("Error, Cannot save data")
-        })
-    })
+              location.reload()
+            })
+            .fail(function(response){
+                alert("Error, Cannot save data")
+            })
+          })
+      })
   })
-</script>
-{% endblock custom_js %}
+  </script>
+  {% endblock custom_js %}
