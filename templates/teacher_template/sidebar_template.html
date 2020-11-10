@@ -60,6 +60,15 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            {% url 'att_table' as att_table %}
+            <a href="{{ att_table }}" class="nav-link {% if request.path == att_table %} active {% endif %}">
+              <i class="nav-icon fas fa-plus-square"></i>
+              <p>
+                Attendance Table
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
 

@@ -18,10 +18,10 @@
               <!-- form start -->
                 <div class="card-body">
                   <div class="form-group">
-                    <label>Subject</label>
-                    <select class="form-control" name="subject" id="subject">
-                        {% for subject in subjects %}
-                            <option value="{{ subject.id }}">{{ subject.subject_name }}</option>
+                    <label>class</label>
+                    <select class="form-control" name="grade" id="grade">
+                        {% for class in classes %}
+                            <option value="{{ class.id }}">{{ class.class_name }}</option>
                         {% endfor %}
                     </select>
                   </div>

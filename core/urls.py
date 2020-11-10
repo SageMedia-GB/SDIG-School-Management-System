@@ -39,7 +39,7 @@ urlpatterns = [
     path('edit_class_save', headViews.edit_class_save, name="edit_class_save"),
     path('manage_terms', headViews.manage_terms, name="manage_terms"),
     path('add_term_save', headViews.add_term_save, name="add_term_save"),
-    path('attendance_table', headViews.attendance_table, name="attendance_table"),
+    path('attendance_tables', headViews.attendance_tables, name="attendance_tables"),
     # Urls for teachers
     path('teacher_home', teacherViews.teacher_home, name="teacher_home"),
     path('take_attendance', teacherViews.take_attendance, name="take_attendance"),
@@ -49,7 +49,15 @@ urlpatterns = [
          name="save_attendance_data"),
     path('update_attendance_data', teacherViews.update_attendance_data,
          name="update_attendance_data"),
-    path('attendance_table', headViews.attendance_table, name="attendance_table"),
+    path('attendance_table', teacherViews.attendance_table, name="attendance_table"),
+    path('att_table', teacherViews.att_table, name="att_table"),
+
+
+    # Urls for new attendance module
+    path('get_new_attendance', teacherViews.get_new_attendance, name="get_new_attendance"),
+    path('save_new_attendance_data', teacherViews.save_new_attendance_data, name="save_new_attendance_data"),
+
+
     # Urls for students
     path('student_home', studentViews.student_home, name="student_home")
 ]

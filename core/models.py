@@ -69,6 +69,7 @@ class Teacher(models.Model):
 class Grade(models.Model):
     id = models.AutoField(primary_key=True)
     class_name = models.CharField(max_length=200)
+    teacher_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     objects = models.Manager()
@@ -117,6 +118,7 @@ class Student(models.Model):
     id = models.AutoField(primary_key=True)
     admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     reg_number = models.CharField(max_length=200)
+    date_of_birth = models.DateField(auto_now_add=True)
     password = models.CharField(max_length=200)
     gender = models.CharField(max_length=200)
     profile_pic = models.FileField()
@@ -137,8 +139,8 @@ class Student(models.Model):
 
 class Attendance(models.Model):
     id = models.AutoField(primary_key=True)
-    subject_id = models.ForeignKey(Subject, on_delete=models.DO_NOTHING)
-    attendance_date = models.DateField(auto_now_add=True)
+    class_id = models.ForeignKey(Grade, on_delete=models.DO_NOTHING)
+    attendance_date = models.DateField()
     term_id = models.ForeignKey(TermModel, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)

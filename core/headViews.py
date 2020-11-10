@@ -41,7 +41,8 @@ def add_teacher_save(request):
 
 
 def add_class(request):
-    return render(request, "headteacher_template/add_class_template.html")
+    teachers = Teacher.objects.all()
+    return render(request, "headteacher_template/add_class_template.html", {"teachers": teachers})
 
 
 def add_class_save(request):
@@ -49,8 +50,10 @@ def add_class_save(request):
         return HttpResponse("Method not allowed")
     else:
         class_name = request.POST.get("grade")
+        teacher_id = request.POST.get("teacher")
+        teacher = CustomUser.objects.get(id=teacher_id)
     try:
-        grade_model = Grade(class_name=class_name)
+        grade_model = Grade(class_name=class_name, teacher_id=teacher)
         grade_model.save()
         messages.success(request, "Successfully Added class")
         return HttpResponseRedirect(reverse("add_class"))
@@ -72,6 +75,7 @@ def add_student_save(request):
         if form.is_valid():
             first_name = form.cleaned_data["first_name"]
             last_name = form.cleaned_data["last_name"]
+            date_of_birth = form.cleaned_data["date_of_birth"]
             email = form.cleaned_data["email"]
             username = form.cleaned_data["username"]
             password = form.cleaned_data["password"]
@@ -93,6 +97,7 @@ def add_student_save(request):
                 user.student.class_id = class_obj
                 term = TermModel.object.get(id=term_id)
                 user.student.term_id = term
+                user.student.date_of_birth = date_of_birth
                 user.student.profile_pic = profile_pic_url
                 user.student.reg_number = reg_number
                 user.student.special_needs = special_needs
@@ -196,6 +201,7 @@ def edit_student(request, student_id):
     form.fields['reg_number'].initial = student.reg_number
     form.fields['first_name'].initial = student.admin.first_name
     form.fields['last_name'].initial = student.admin.last_name
+    form.fields['date_of_birth'].initial = student.date_of_birth
     form.fields['gender'].initial = student.gender
     form.fields['grade'].initial = student.class_id.id
     form.fields['username'].initial = student.admin.username
@@ -220,6 +226,7 @@ def edit_student_save(request):
             reg_number = form.cleaned_data["reg_number"]
             first_name = form.cleaned_data["first_name"]
             last_name = form.cleaned_data["last_name"]
+            date_of_birth = form.cleaned_data['date_of_birth']
             class_id = form.cleaned_data["grade"]
             gender = form.cleaned_data["gender"]
             email = form.cleaned_data["email"]
@@ -246,6 +253,7 @@ def edit_student_save(request):
 
                 student = Student.objects.get(admin=student_id)
                 student.reg_number = reg_number
+                student.date_of_birth = date_of_birth
                 student.address = address
                 class_name = Grade.objects.get(id=class_id)
                 student.class_id = class_name
@@ -340,5 +348,5 @@ def add_term_save(request):
             return HttpResponseRedirect(reverse("manage_terms"))
 
 
-def attendance_table(request):
-    return render(request, "headteacher_template/attendance_table.html")
+def attendance_tables(request):
+    return render(request, "headteacher_template/attendance_tables.html")
