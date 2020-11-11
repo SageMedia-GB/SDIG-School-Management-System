@@ -42,23 +42,14 @@ urlpatterns = [
     path('attendance_tables', headViews.attendance_tables, name="attendance_tables"),
     # Urls for teachers
     path('teacher_home', teacherViews.teacher_home, name="teacher_home"),
-    path('take_attendance', teacherViews.take_attendance, name="take_attendance"),
-    path('get_students_attendance', teacherViews.get_students_attendance,
-         name="get_students_attendance"),
-    path('save_attendance_data', teacherViews.save_attendance_data,
-         name="save_attendance_data"),
-    path('update_attendance_data', teacherViews.update_attendance_data,
-         name="update_attendance_data"),
-    path('attendance_table', teacherViews.attendance_table, name="attendance_table"),
-
-
     # Urls for new attendance module
     path('new_attendance', teacherViews.new_attendance, name="new_attendance"),
-    #path('get_new_attendance', teacherViews.get_new_attendance, name="get_new_attendance"),
     path('save_new_attendance_data', teacherViews.save_new_attendance_data, name="save_new_attendance_data"),
     path('get_att_table', teacherViews.get_att_table, name="get_att_table"),
-
-
+    path('view_update_attendance', teacherViews.view_update_attendance, name="view_update_attendance"),
+    path('get_atendance_dates', teacherViews.get_atendance_dates, name="get_atendance_dates"),
+    path('get_attendance_data', teacherViews.get_attendance_data, name="get_attendance_data"),
+    path('update_attendance_data', teacherViews.update_attendance_data, name="update_attendance_data"),
     # Urls for students
     path('student_home', studentViews.student_home, name="student_home")
 ]
