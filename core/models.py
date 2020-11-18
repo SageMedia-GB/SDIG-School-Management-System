@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from ckeditor.fields import RichTextField
 
 
 class CustomUser(AbstractUser):
@@ -62,8 +63,8 @@ class Teacher(models.Model):
     class Meta:
         db_table = 'Teachers'
 
-    def __str__(self):
-        return self.admin
+"""     def __str__(self):
+        return self.admin """
 
 
 class Grade(models.Model):
@@ -140,7 +141,7 @@ class Student(models.Model):
 class Attendance(models.Model):
     id = models.AutoField(primary_key=True)
     class_id = models.ForeignKey(Grade, on_delete=models.DO_NOTHING)
-    attendance_date = models.DateField()
+    attendance_date = models.DateField(auto_now_add=True)
     term_id = models.ForeignKey(TermModel, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
@@ -250,6 +251,8 @@ class CircuitSupervisor(models.Model):
     contact = models.IntegerField()
     school = models.CharField(max_length=200)
     remarks = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
     objects = models.Manager()
 
     class Meta:
@@ -257,6 +260,54 @@ class CircuitSupervisor(models.Model):
 
     def __str__(self):
         return self.admin
+
+
+class LessonNote(models.Model):
+    id = models.AutoField(primary_key=True)
+    teacher_id = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    subject_id = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    class_id = models.ForeignKey(Grade, on_delete=models.CASCADE)
+    week_ending = models.DateField()
+    reference = models.CharField(max_length=500)
+    day = models.CharField(max_length=500)
+    topic = models.CharField(max_length=500)
+    objectives = models.CharField(max_length=500)
+    teacher_learner_activities = models.CharField(max_length=500)
+    teaching_learning_materials = models.CharField(max_length=500)
+    corepoints = models.CharField(max_length=500)
+    evaluation_and_remarks = models.CharField(max_length=500)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+    objects = models.Manager()
+
+    class Meta:
+        db_table = 'LessonNotes'
+
+    def __str__(self):
+        return self.topic
+
+
+class WeeklyForecast(models.Model):
+    id = models.AutoField(primary_key=True)
+    teacher_id = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    subject_id = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    class_id = models.ForeignKey(Grade, on_delete=models.CASCADE)
+    term_id = models.ForeignKey(TermModel, on_delete=models.CASCADE)
+    year = models.CharField(max_length=100)
+    week = models.IntegerField()
+    week_ending = models.DateField(auto_now_add=True)
+    topic = models.CharField(max_length=500)
+    references = models.TextField()
+    remarks = models.CharField(max_length=500)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+    objects = models.Manager()
+
+    class Meta:
+        db_table = 'WeeklyForecast'
+
+    def __str__(self):
+        return self.topic
 
 
 @receiver(post_save, sender=CustomUser)

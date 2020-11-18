@@ -50,6 +50,10 @@ urlpatterns = [
     path('get_atendance_dates', teacherViews.get_atendance_dates, name="get_atendance_dates"),
     path('get_attendance_data', teacherViews.get_attendance_data, name="get_attendance_data"),
     path('update_attendance_data', teacherViews.update_attendance_data, name="update_attendance_data"),
+    path('lesson_notes', teacherViews.lesson_notes, name="lesson_notes"),
+    path('lesson_note_save', teacherViews.lesson_note_save, name="lesson_note_save"),
+    path('weekly_forecasts', teacherViews.weekly_forecasts, name="weekly_forecasts"),
+    path('weekly_forecast_save', teacherViews.weekly_forecast_save, name="weekly_forecast_save"),
     # Urls for students
     path('student_home', studentViews.student_home, name="student_home")
 ]

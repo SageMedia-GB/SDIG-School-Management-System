@@ -1,0 +1,101 @@
+{% extends 'teacher_template/base_template.html' %}
+  {% block page_title %}
+    Lesson Notes teacher_id:{{ request.user.id}}
+  {% endblock page_title %}
+  {% block main_content %}
+<!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Add Lesson Note</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form" action="/lesson_note_save" method="post">
+                {% csrf_token %}
+                <div class="card-body">
+                  <div class="form-group">
+                    <label>Class</label>
+                    <select class="form-control" name="grade">
+                        {% for grade in grades %}
+                            <option value="{{ grade.id }}">{{ grade.class_name }}</option>
+                        {% endfor %}
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Week Ending</label>
+                    <input type="date" class="form-control" name="week_ending">
+                    <input type="hidden" name="teacher" value="{{ request.user.id }}">
+                  </div>
+                  <div class="form-group">
+                    <label>Subject</label>
+                    <select class="form-control" name="subject">
+                        {% for subject in subjects %}
+                            <option value="{{ subject.id }}">{{ subject.subject_name }}</option>
+                        {% endfor %}
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Day/Duration</label>
+                    <input type="text" name="day" class="form-control" value='{% now "SHORT_DATE_FORMAT" %}'>
+                  </div>
+                  <div class="form-group">
+                    <label>Reference</label>
+                    <input type="text" name="reference" class="form-control" placeholder="Reference">
+                  </div>
+                  <div class="form-group">
+                    <label>Topic/Sub-Topic/Aspect</label>
+                    <input type="text" name="topic" class="form-control" placeholder="Topic/Sub-Topic/Aspect">
+                  </div>
+                  <div class="form-group">
+                    <label>Objectives/R.P.K</label>
+                    <textarea name="objectives" class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label>Teacher-Learner Activities</label>
+                    <textarea name="teacher_learner_activities" class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label>Teaching Learning Materials</label>
+                    <textarea name="teaching_learning_materials" class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label>Core Points</label>
+                    <textarea name="core_points" class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label>Evaluation And Remarks</label>
+                    <input type="text" name="evaluation_and_remarks" class="form-control" placeholder="Evaluation And Remarks">
+                  </div>
+                    <div class="form-group">
+                        {% if messages %}
+                            {% for message in messages %}
+                            {% if message.tags == 'error' %}
+                            <div class="alert alert-danger" style="margin-top:10px;">{{ message }}</div>
+                            {% endif %}
+                            {% if message.tags == 'success' %}
+                            <div class="alert alert-success" style="margin-top:10px;">{{ message }}</div>
+                            {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary btn-block">Save</button>
+                </div>
+              </form>
+            </div>
+            <!-- /.card -->
+          </div>
+          <!--/.col (right) -->
+        </div>
+      </div>
+    </section>
+    <!-- /.content -->
+  {% endblock main_content %}

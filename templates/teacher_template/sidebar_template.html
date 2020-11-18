@@ -4,7 +4,7 @@
     <a href="{% url 'headteacher_home' %}" class="brand-link">
       <img src="{% static "dist/img/AdminLTELogo.png" %}" alt="SMS Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-light">Adakope M/A</span>
+      <span class="brand-text font-weight-light">SEM</span>
     </a>
 
     <!-- Sidebar -->
@@ -48,6 +48,24 @@
               <i class="nav-icon fas fa-plus-square"></i>
               <p>
                 View / Update Attendance
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'lesson_notes' as lesson_notes %}
+            <a href="{{ lesson_notes }}" class="nav-link {% if request.path == lesson_notes %} active {% endif %}">
+              <i class="nav-icon fas fa-plus-square"></i>
+              <p>
+                Manage Lesson Notes
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'weekly_forecasts' as weekly_forecasts %}
+            <a href="{{ weekly_forecasts }}" class="nav-link {% if request.path == weekly_forecasts %} active {% endif %}">
+              <i class="nav-icon fas fa-plus-square"></i>
+              <p>
+                Manage Weekly Forecasts
               </p>
             </a>
           </li>

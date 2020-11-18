@@ -46,7 +46,17 @@
               </div>
               <div class='form-group'>
                 <label>Attendance Date</label>
-                <input type='date' name='attendance_date' id='attendance_date' class='form-control'>
+                <input type='date' name='attendance_date' id='attendance_date' class='form-control datetimepicker-input' value="">
+              </div>
+              <div class="form-group">
+                <b>Total Number Of Students: {{ count_students }}</b><br>
+                <b>Total Number Of Males: {{ male_count }}</b><br>
+                <b>Total Number Of Females: {{ female_count }}</b><br>
+                <b>Present: </b><b id="p_counter"></b><br>
+                <b>Absent: </b><b id="a_counter"></b><br>
+              </div>
+              <div class="form-group" style="float: right;">
+                <b>Month: </b><b id="month"></b>
               </div>
                 <table id="table_head" class="table table-bordered">
                   <thead>
@@ -74,6 +84,9 @@
   {% block custom_js %}
   <script>
   $(document).ready(function(){
+      var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];;
+      var date = new Date();
+      document.getElementById('month').innerHTML = months[date.getMonth()];
       $("#fetch_new_attendance").click(function(){
           var grade = $("#grade").val()
           var term = $("#term").val()
